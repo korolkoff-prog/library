@@ -1,0 +1,17 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Редактировать жанр{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-2">Редактирование жанра</h1>
+<div class="container">
+	<form method="POST" action=".">
+		{% csrf_token %}
+		<div class="mb-3">
+	    	{{ form.name.label_tag }}
+	    	{{ form.name }}
+	  	</div>
+	  	<button type="submit" class="btn btn-success">Обновить</button>
+	</form>
+</div>
+{% endblock %}

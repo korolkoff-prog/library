@@ -1,0 +1,29 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Добавить книгу{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-2">Добавление книги</h1>
+<div class="container">
+	<form method="POST" action=".">
+		{% csrf_token %}
+		<div class="mb-3">
+	    	{{ form.title.label_tag }}
+	    	{{ form.title }}
+	  	</div>
+	  	<div class="mb-3">
+	    	{{ form.discription.label_tag }}
+	    	{{ form.discription }}
+	  	</div>
+	  	<div class="mb-3">
+	  		{{ form.author.label_tag }}
+	  		{{ form.author }}
+	  	</div>
+	  	<div class="mb-3">
+	  		{{ form.genre.label_tag }}
+	  		{{ form.genre }}
+	  	</div>
+	  	<button type="submit" class="btn btn-success">Добавить</button>
+	</form>
+</div>
+{% endblock %}

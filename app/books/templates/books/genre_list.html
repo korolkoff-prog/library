@@ -1,0 +1,15 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Жанры{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Жанры</h1>
+<div class="container">
+	{% for genre in genres %}
+		<div class="d-flex">
+			<p>{{ genre.name }}</p>
+			<a href="{% url 'genre_update' genre.pk %}" class="mx-2">Редактировать</a>	
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}

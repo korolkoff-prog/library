@@ -1,0 +1,23 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Авторы{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-2">Авторы</h1>
+
+<div class="contaner-fluid">
+	{% for author in authors %}
+	<div class="mb-3">
+		<div class="d-flex justify-content-center mt-2">
+			<div class="container">
+				<h2 class="mt-2">{{ author.fio }}</h1>
+				<h3 class="mt-3">Годы жизни:</h2>
+				<p>Дата рождения: {{ author.birth_date }}</p>
+				<p>Дата смерти: {{ author.death_date }}</p>
+				<a href="{% url 'author_detail' author.pk%}">Подробнее</a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

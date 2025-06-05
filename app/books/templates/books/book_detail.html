@@ -1,0 +1,19 @@
+{% extends 'books/base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="contaner">
+	<h1 class="text-center mt-2">{{ book.title }}</h1>
+	<div class="d-flex justify-content-center mt-2">
+		<div class="container">
+			<h2 class="mt-3">Описание:</h2>
+			<p>{{ book.discription }}</p>
+			<p>Автор: <a href="{% url 'author_detail' book.author.pk %}">{{ book.author.fio }}</a></p>
+			<p>Жанр: {{ book.genre.name }}</p>
+			<a href="{% url 'book_update' book.pk %}" class="btn btn-success">Редактировать</a>
+		</div>
+	</div>
+
+</div>
+{% endblock %}

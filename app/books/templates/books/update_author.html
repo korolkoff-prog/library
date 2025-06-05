@@ -1,0 +1,33 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Редактировать писателя{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-2">Редактирование писателя</h1>
+<div class="container">
+	<form method="POST" action=".">
+		{% csrf_token %}
+		<div class="mb-3">
+	    	{{ form.fio.label_tag }}
+	    	{{ form.fio }}
+	  	</div>
+	  	<div class="mb-3">
+	    	{{ form.bio.label_tag }}
+	    	{{ form.bio }}
+	  	</div>
+	  	<div class="mb-3">
+	  		{{ form.birth_date.label_tag }}
+	  		<div class="d-flex">
+	  			{{ form.birth_date }}
+	  		</div>
+	  	</div>
+	  	<div class="mb-3">
+	  		{{ form.death_date.label_tag }}
+	  		<div class="d-flex">
+	  			{{ form.death_date }}
+	  		</div>
+	  	</div>
+	  	<button type="submit" class="btn btn-success">Обновить</button>
+	</form>
+</div>
+{% endblock %}
