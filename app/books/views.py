@@ -1,16 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView
 from .models import Book, Author, Genre
 from .forms import BookForm, AuthorForm, GenreForm, BookUpdateForm, AuthorUpdateForm, GenreUpdateForm
 
 
-def book_list(request):
-	books = Book.objects.all()
-	return render(request, 'books/book_list.html', {'books': books})
+class BookListView(ListView):
+	model = Book
+	template_name = 'books/book_list.html'
+	context_object_name = 'books'
+	paginate_by = 10
 
 
-def book_detail(request, pk):
-	book = get_object_or_404(Book, pk=pk)
-	return render(request, 'books/book_detail.html', {'book': book})
+class BookDetailView(DetailView):
+	model = Book
+	template_name = 'books/book_detail.html'
+	context_object_name = 'book'
 
 
 def book_add(request):
@@ -47,14 +51,18 @@ def book_update(request, pk):
 	return render(request, 'books/update_book.html', {'form': BookUpdateForm(instance=book)})
 
 
-def author_list(request):
-	authors = Author.objects.all()
-	return render(request, 'books/author_list.html', {'authors': authors})
+
+class AuthorListView(ListView):
+	model = Author
+	template_name = 'books/author_list.html'
+	context_object_name = 'authors'
+	paginate_by = 10
 
 
-def author_detail(request, pk):
-	author = get_object_or_404(Author, pk=pk)
-	return render(request, 'books/author_detail.html', {'author': author})
+class AuthorDetailView(DetailView):
+	model = Author
+	template_name = 'books/author_detail.html'
+	context_object_name = 'author'
 
 
 def author_add(request):
@@ -91,9 +99,11 @@ def author_update(request, pk):
 	return render(request, 'books/update_author.html', {'form': AuthorUpdateForm(instance=author)})
 
 
-def genre_list(request):
-	genres = Genre.objects.all()
-	return render(request, 'books/genre_list.html', {'genres': genres})
+
+class GenreListView(ListView):
+	model = Genre
+	template_name = 'books/genre_list.html'
+	context_object_name = 'genres'
 
 
 def genre_add(request):
