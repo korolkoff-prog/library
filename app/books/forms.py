@@ -2,7 +2,11 @@ from django import forms
 from .models import Author, Genre, Book
 
 
-class BookForm(forms.Form):
+class BookForm(forms.ModelForm):
+	class Meta:
+		model = Book
+		fields = ['title', 'discription', 'author', 'genre']
+
 	title = forms.CharField(
 		min_length=3,
 		max_length=255, 
@@ -37,7 +41,6 @@ class BookForm(forms.Form):
 
 	genre = forms.ModelChoiceField(
 			queryset=Genre.objects.all(),
-			# to_field_name='genre',
 			label='Жанр книги',
 			widget=forms.Select(attrs={
 					'class': 'form-control'
@@ -97,7 +100,11 @@ class BookUpdateForm(forms.ModelForm):
 	)
 
 
-class AuthorForm(forms.Form):
+class AuthorForm(forms.ModelForm):
+	class Meta:
+		model = Author
+		fields = ['fio', 'bio', 'birth_date', 'death_date']
+
 	fio = forms.CharField(
 		min_length = 5,
 		max_length = 255,
@@ -187,7 +194,11 @@ class AuthorUpdateForm(forms.ModelForm):
 	)
 
 
-class GenreForm(forms.Form):
+class GenreForm(forms.ModelForm):
+	class Meta:
+		model = Genre
+		fields = ['name']
+
 	name = forms.CharField(
 		min_length = 3,
 		max_length = 50,

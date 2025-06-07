@@ -1,5 +1,6 @@
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Book, Author, Genre
 from .forms import BookForm, AuthorForm, GenreForm, BookUpdateForm, AuthorUpdateForm, GenreUpdateForm
 
@@ -17,22 +18,11 @@ class BookDetailView(DetailView):
 	context_object_name = 'book'
 
 
-def book_add(request):
-	form = BookForm()
-
-	if request.method == "POST":
-		book = Book()
-		form = BookForm(request.POST)
-		
-		if form.is_valid():
-			book.title = form.cleaned_data['title']
-			book.discription = form.cleaned_data['discription']
-			book.author = form.cleaned_data['author']
-			book.genre  = form.cleaned_data['genre']
-			book.save()
-			return redirect('book_list')
-	
-	return render(request, 'books/add_book.html', {'form': BookForm()})
+class BookCreateView(CreateView):
+	model = Book
+	form_class = BookForm
+	template_name = 'books/add_book.html'
+	success_url = reverse_lazy('book_list')
 
 
 def book_update(request, pk):
@@ -65,22 +55,11 @@ class AuthorDetailView(DetailView):
 	context_object_name = 'author'
 
 
-def author_add(request):
-	form = AuthorForm()
-
-	if request.method == "POST":
-		author = Author()
-		form = AuthorForm()
-
-		if form.is_valid():
-			author.fio = form.cleaned_data['fio']
-			author.bio = form.cleaned_data['bio']
-			author.birth_date = form.cleaned_data['birth_date']
-			author.death_date = form.cleaned_data['death_date']
-			author.save()
-			return redirect('author_list')
-
-	return render(request, 'books/add_author.html', {'form': AuthorForm()})
+class AuthorCreateView(CreateView):
+	model = Author
+	form_class = AuthorForm
+	template_name = 'books/add_author.html'
+	success_url = reverse_lazy('author_list')
 
 
 def author_update(request, pk):
@@ -106,19 +85,11 @@ class GenreListView(ListView):
 	context_object_name = 'genres'
 
 
-def genre_add(request):
-	form = GenreForm()
-
-	if request.method == "POST":
-		genre = Genre()
-		form = GenreForm()
-
-		if form.is_valid():
-			genre.name = form.cleaned_data['name']
-			genre.save()
-			return redirect('genre_list')
-
-	return render(request, 'books/add_genre.html', {'form': form})
+class GenreCreateView(CreateView):
+	model = Genre
+	form_class = GenreForm
+	template_name = 'books/add_genre.html'
+	success_url = reverse_lazy('genre_list')
 
 
 def genre_update(request, pk):
