@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import UpdateView
 from .models import Book, Author, Genre
 from .forms import BookForm, AuthorForm, GenreForm, BookUpdateForm, AuthorUpdateForm, GenreUpdateForm
 
@@ -25,20 +26,11 @@ class BookCreateView(CreateView):
 	success_url = reverse_lazy('book_list')
 
 
-def book_update(request, pk):
-	book = get_object_or_404(Book, pk=pk)
-
-	if request.method == "POST":
-		form = BookUpdateForm(request.POST)
-		if form.is_valid():
-			book.title = form.cleaned_data['title']
-			book.discription = form.cleaned_data['discription']
-			book.author = form.cleaned_data['author']
-			book.genre = form.cleaned_data['genre']
-			book.save()
-			return redirect('book_list')
-
-	return render(request, 'books/update_book.html', {'form': BookUpdateForm(instance=book)})
+class BookUpdateView(UpdateView):
+	model = Book
+	form_class = BookUpdateForm
+	template_name = 'books/update_book.html'
+	success_url = reverse_lazy('book_list')
 
 
 
@@ -62,20 +54,11 @@ class AuthorCreateView(CreateView):
 	success_url = reverse_lazy('author_list')
 
 
-def author_update(request, pk):
-	author = get_object_or_404(Author, pk=pk)
-
-	if request.method == "POST":
-		form = AuthorUpdateForm(request.POST)
-		if form.is_valid():
-			author.fio = form.cleaned_data['fio']
-			author.bio = form.cleaned_data['bio']
-			author.birth_date = form.cleaned_data['birth_date']
-			author.death_date = form.cleaned_data['death_date']
-			author.save()
-			return redirect('author_list')
-
-	return render(request, 'books/update_author.html', {'form': AuthorUpdateForm(instance=author)})
+class AuthorUpdateView(UpdateView):
+	model = Author
+	form_class = AuthorUpdateForm
+	template_name = 'books/update_author.html'
+	success_url = reverse_lazy('author_list')
 
 
 
@@ -92,17 +75,8 @@ class GenreCreateView(CreateView):
 	success_url = reverse_lazy('genre_list')
 
 
-def genre_update(request, pk):
-	genre = get_object_or_404(Genre, pk=pk)
-
-	if request.method == "POST":
-		form = GenreUpdateForm(request.POST)
-		if form.is_valid():
-			genre.name = form.cleaned_data['name']
-			genre.save()
-			return redirect('genre_list')
-
-	return render(request, 'books/update_genre.html', {'form': GenreUpdateForm(instance=genre)})
-
-
-
+class GenreUpdateView(UpdateView):
+	model = Genre
+	form_class = GenreUpdateForm
+	template_name = 'books/update_genre.html'
+	success_url = reverse_lazy('genre_list')
